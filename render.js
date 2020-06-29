@@ -99,6 +99,12 @@ async function scrollVal(end, framerate = 30) {
     scrolling = false;
 }
 
+function hackywalls(walls, centerBeat) {
+    return (walls.filter(function (wall) {
+        return ( (wall._time <= centerBeat) && (wall._time + wall._duration >= centerBeat) )
+    }));
+}
+
 function render(notes, centerBeat) {
     if (!ready) {
         clearOutput();
