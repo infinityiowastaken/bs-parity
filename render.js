@@ -46,7 +46,13 @@ async function scrollVal(end, framerate = 30) {
     scrolling = false;
 }
 
-function render(notes = notesArray) {
+function hackywalls(walls, centerBeat) {
+    return (walls.filter(function (wall) {
+        return ( (wall._time <= centerBeat) && (wall._time + wall._duration >= centerBeat) )
+    }));
+}
+
+function render(notes, centerBeat) {
     if (!ready) {
         // TODO: reimplement this with outputUI()?
         console.log('File loading not ready, try again');
