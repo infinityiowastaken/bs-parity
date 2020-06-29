@@ -273,6 +273,48 @@ body .theme {
 .main #render-container #grid-container .note.warn .note-face {
   border: 1px solid var(--warning);
 }
+.main #render-container #grid-container .wall {
+  --size: 50px;
+  width: calc(var(--size) * var(--width));
+  height: calc(var(--size) * 3);
+  position: absolute;
+  transform-style: preserve-3d;
+}
+.main #render-container #grid-container .wall .wall-face {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  position: absolute;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  background: rgba(221, 48, 48, 0.4);
+}
+.main #render-container #grid-container .wall .wall-face.front {
+  transform: rotateY(0deg) translateZ(calc(var(--size) / 2));
+  height: calc(var(--size) * 3);
+  width: calc(var(--size) * var(--width));
+}
+.main #render-container #grid-container .wall .wall-face.back {
+  transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
+  height: calc(var(--size) * 3);
+  width: calc(var(--size) * var(--width));
+}
+.main #render-container #grid-container .wall .wall-face.left {
+  transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
+  height: calc(var(--size) * 3);
+}
+.main #render-container #grid-container .wall .wall-face.right {
+  transform: rotateY(90deg) translateZ(calc(var(--size) * (var(--width) - 0.5)));
+  height: calc(var(--size) * 3);
+}
+.main #render-container #grid-container .wall .wall-face.top {
+  transform: rotateX(90deg) translateZ(calc(var(--size) / 2));
+  width: calc(var(--size) * var(--width));
+}
+.main #render-container #grid-container .wall .wall-face.bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--size) * 2.5));
+  width: calc(var(--size) * var(--width));
+}
 h1 {
   position: absolute;
   top: -0.2rem;

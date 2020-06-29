@@ -250,6 +250,52 @@ body {
                 &.error .note-face { border: 1px solid var(--error);  }
                 &.warn  .note-face { border: 1px solid var(--warning);}
             }
+
+            .wall {
+                --size: 50px;
+                width: calc(var(--size) * var(--width));
+                height: calc(var(--size) * 3);
+                position: absolute;
+                transform-style: preserve-3d;
+    
+                .wall-face { // todo: depth
+                    backface-visibility: hidden;
+                    position: absolute;
+                    display: block;
+                    width: var(--size);
+                    height: var(--size);
+                    background: rgba(221, 48, 48, 0.4);
+                    // outline: 0.5px solid black;
+                    // border-radius: 2px; // border allows for slight smoothing at edges which makes the outline look better
+    
+                    &.front  { 
+                        transform: rotateY(0deg)   translateZ(calc(var(--size) / 2)); 
+                        height: calc(var(--size) * 3);;
+                        width: calc(var(--size) * var(--width));
+                    }
+                    &.back   { 
+                        transform: rotateY(180deg) translateZ(calc(var(--size) / 2)); 
+                        height: calc(var(--size) * 3);
+                        width: calc(var(--size) * var(--width));
+                    }
+                    &.left   { 
+                        transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)); 
+                        height: calc(var(--size) * 3);
+                    }
+                    &.right  { 
+                        transform: rotateY(90deg)  translateZ(calc( var(--size) * (var(--width) - 0.5) )); 
+                        height: calc(var(--size) * 3);
+                    }
+                    &.top    { 
+                        transform: rotateX(90deg)  translateZ(calc(var(--size) / 2)); 
+                        width: calc(var(--size) * var(--width));
+                    }
+                    &.bottom { 
+                        transform: rotateX(-90deg) translateZ(calc(var(--size) * 2.5)); // todo: height adj 
+                        width: calc(var(--size) * var(--width));
+                    }
+                }
+            }
         }
     } // 3d visualiser
 }
