@@ -99,10 +99,54 @@ async function scrollVal(end, framerate = 30) {
     scrolling = false;
 }
 
-function hackywalls(walls, centerBeat) {
-    return (walls.filter(function (wall) {
-        return ( (wall._time <= centerBeat) && (wall._time + wall._duration >= centerBeat) )
-    }));
+function renderWalls(walls, centerBeat) {
+    let containerWidth = renderContainer.offsetWidth;
+    let containerHeight = renderContainer.offsetHeight;
+    let gridHeight = containerHeight / 2;
+    let noteSize = gridHeight / 3 / Math.SQRT2;
+
+    // filter notes outside of range
+    walls = walls.filter(function (wall) {
+        let start = wall._time;
+        let end = wall._time + wall._duration;
+        let rStart = centerBeat - renderDistance;
+        let rEnd = centerBeat + renderDistance;
+        return (start <= rEnd && end >= rStart)
+    });
+
+    console.log(walls)
+
+    // calculate note position, make note element and add to the container
+    for (let wall of walls) {
+        let relTime = wall._time - centerBeat;
+
+        let posX = (gridHeight / 3) * (0.5 + wall._lineIndex) - (noteSize / 2);
+        let posY = (gridHeight / 3) * (0.5) - (noteSize / 2);
+        let posZ = relTime * timeScale * (containerWidth / 4) * -1;
+        let width = wall._width;
+        let depth = Math.min(wall._duration, centerBeat + renderDistance - wall._time);
+
+
+        let wallContainer = document.createElement('div');
+        wallContainer.classList.add('wall');
+        wallContainer.style.setProperty('--size', noteSize + 'px');
+        wallContainer.style.setProperty('--width', width);
+        wallContainer.style.setProperty('--depth', depth);
+
+
+        let faces = ['front', 'back', 'left', 'right', 'top', 'bottom'];
+        for (let face of faces) {
+            let wallFace = document.createElement('div');
+            wallFace.classList.add('wall-face', face);
+            wallContainer.appendChild(wallFace);
+        }
+
+        wallContainer.style.setProperty('left', posX + 'px');
+        wallContainer.style.setProperty('top', posY + 'px');
+        wallContainer.style.setProperty('transform', 'translateZ(' + posZ + 'px)');
+
+        gridContainer.appendChild(wallContainer);
+    }
 }
 
 function render(notes, centerBeat) {
@@ -220,6 +264,8 @@ function render(notes, centerBeat) {
 
         gridContainer.appendChild(marker);
     }
+
+    renderWalls(wallsArray, centerBeat);
 
     gridContainer.style.setProperty('transform', 'perspective(' + containerHeight * (1 / perspectiveMultiplier) + 'px)' +
         'rotateX(' + angleX + 'deg) rotateY(' + angleY + 'deg)');
