@@ -50,7 +50,7 @@ function renderWalls(walls, centerBeat) {
     let containerWidth = renderContainer.offsetWidth;
     let containerHeight = renderContainer.offsetHeight;
     let gridHeight = containerHeight / 2;
-    let noteSize = gridHeight / 3 / Math.SQRT2;
+    let noteSize = gridHeight / 3;
 
     // filter notes outside of range
     walls = walls.filter(function (wall) {
