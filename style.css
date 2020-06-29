@@ -295,6 +295,7 @@ body .theme {
   display: block;
   width: var(--size);
   height: var(--size);
+<<<<<<< HEAD
   background: rgba(221, 48, 48, 0.67);
   outline: 1px solid rgba(255, 255, 255, 0.75);
   outline-offset: -1px;
@@ -331,6 +332,35 @@ body .theme {
   transform: rotateX(-90deg) translate3D(0px, calc(0.5 * (var(--depth) - var(--size))), calc((var(--size) * 3 * var(--height)) - (var(--depth) / 2)));
   width: calc(var(--size) * var(--width));
   height: var(--depth);
+=======
+  background: rgba(221, 48, 48, 0.4);
+}
+.main #render-container #grid-container .wall .wall-face.front {
+  transform: rotateY(0deg) translateZ(calc(var(--size) / 2));
+  height: calc(var(--size) * 3);
+  width: calc(var(--size) * var(--width));
+}
+.main #render-container #grid-container .wall .wall-face.back {
+  transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
+  height: calc(var(--size) * 3);
+  width: calc(var(--size) * var(--width));
+}
+.main #render-container #grid-container .wall .wall-face.left {
+  transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
+  height: calc(var(--size) * 3);
+}
+.main #render-container #grid-container .wall .wall-face.right {
+  transform: rotateY(90deg) translateZ(calc(var(--size) * (var(--width) - 0.5)));
+  height: calc(var(--size) * 3);
+}
+.main #render-container #grid-container .wall .wall-face.top {
+  transform: rotateX(90deg) translateZ(calc(var(--size) / 2));
+  width: calc(var(--size) * var(--width));
+}
+.main #render-container #grid-container .wall .wall-face.bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--size) * 2.5));
+  width: calc(var(--size) * var(--width));
+>>>>>>> wall rendering
 }
 h1 {
   position: absolute;

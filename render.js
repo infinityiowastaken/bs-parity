@@ -50,7 +50,7 @@ function renderWalls(walls, centerBeat) {
     let containerWidth = renderContainer.offsetWidth;
     let containerHeight = renderContainer.offsetHeight;
     let gridHeight = containerHeight / 2;
-    let noteSize = gridHeight / 3 / Math.SQRT2;
+    let noteSize = gridHeight / 3;
 
     // filter notes outside of range
     walls = walls.filter(function (wall) {
@@ -227,10 +227,12 @@ function render(notes, centerBeat) {
     }
 
     let beatMarkers = [];
-    for (let i = Math.max(0, Math.ceil(centerBeat - renderDistance - 1)); i <= Math.floor(centerBeat + renderDistance + 1); i++) {
-        if (i <= Math.floor(centerBeat + renderDistance + 1)) {
-            for (let j = 0; j < divisionValue; j++) {
-                beatMarkers.push(i + (j / divisionValue));
+    for ( let i = Math.max(0, Math.ceil(centerBeat - renderDistance - 1)); 
+          i <= Math.floor(centerBeat + renderDistance + 1); 
+          i++ ) {
+            if (i <= Math.floor(centerBeat + renderDistance + 1)) {
+                for (let j = 0; j < divisionValue; j++) {
+                    beatMarkers.push(i + (j / divisionValue));
             }
         }
     }
