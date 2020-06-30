@@ -185,6 +185,7 @@ body .theme {
 }
 .main #render-container #grid-container .marker.decimalTime .marker-number {
   opacity: 0;
+  cursor: none;
 }
 .main #render-container #grid-container .marker .marker-line {
   background-color: var(--etext);
@@ -278,32 +279,33 @@ body .theme {
   display: block;
   width: var(--size);
   height: var(--size);
-  background: rgba(221, 48, 48, 0.4);
+  background: rgba(221, 48, 48, 0.67);
+  outline: 1px solid rgba(255, 255, 255, 0.75);
 }
 .main #render-container #grid-container .wall .wall-face.front {
   transform: rotateY(0deg) translateZ(calc(var(--size) / 2));
-  height: calc(var(--size) * 3);
+  height: calc(var(--size) * 3 * var(--height));
   width: calc(var(--size) * var(--width));
 }
 .main #render-container #grid-container .wall .wall-face.back {
   transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
-  height: calc(var(--size) * 3);
+  height: calc(var(--size) * 3 * var(--height));
   width: calc(var(--size) * var(--width));
 }
 .main #render-container #grid-container .wall .wall-face.left {
   transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
-  height: calc(var(--size) * 3);
+  height: calc(var(--size) * 3 * var(--height));
 }
 .main #render-container #grid-container .wall .wall-face.right {
   transform: rotateY(90deg) translateZ(calc(var(--size) * (var(--width) - 0.5)));
-  height: calc(var(--size) * 3);
+  height: calc(var(--size) * 3 * var(--height));
 }
 .main #render-container #grid-container .wall .wall-face.top {
   transform: rotateX(90deg) translateZ(calc(var(--size) / 2));
   width: calc(var(--size) * var(--width));
 }
 .main #render-container #grid-container .wall .wall-face.bottom {
-  transform: rotateX(-90deg) translateZ(calc(var(--size) * 2.5));
+  transform: rotateX(-90deg) translateZ(calc(var(--size) * (3 * var(--height) - 0.5)));
   width: calc(var(--size) * var(--width));
 }
 h1 {

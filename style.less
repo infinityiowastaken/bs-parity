@@ -193,7 +193,7 @@ body {
                 align-items: center;
                 position: absolute;
                 
-                &.decimalTime .marker-number {opacity: 0;}
+                &.decimalTime .marker-number {opacity: 0; cursor: none;}
     
                 .marker-line {
                     background-color: var(--etext);
@@ -261,34 +261,35 @@ body {
                     display: block;
                     width: var(--size);
                     height: var(--size);
-                    background: rgba(221, 48, 48, 0.4);
-                    // outline: 0.5px solid black;
-                    // border-radius: 2px; // border allows for slight smoothing at edges which makes the outline look better
+                    background: rgba(221, 48, 48, 0.67);
+                    outline: 1px solid rgba(255, 255, 255, 0.75);
     
                     &.front  { 
                         transform: rotateY(0deg)   translateZ(calc(var(--size) / 2)); 
-                        height: calc(var(--size) * 3);;
+                        height: calc(var(--size) * 3 * var(--height));;
                         width: calc(var(--size) * var(--width));
                     }
                     &.back   { 
                         transform: rotateY(180deg) translateZ(calc(var(--size) / 2)); 
-                        height: calc(var(--size) * 3);
+                        height: calc(var(--size) * 3 * var(--height));
                         width: calc(var(--size) * var(--width));
                     }
                     &.left   { 
                         transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)); 
-                        height: calc(var(--size) * 3);
+                        height: calc(var(--size) * 3 * var(--height));
+                        // width: calc(var(--size) * var(--depth) * 4);
                     }
                     &.right  { 
                         transform: rotateY(90deg)  translateZ(calc( var(--size) * (var(--width) - 0.5) )); 
-                        height: calc(var(--size) * 3);
+                        height: calc(var(--size) * 3 * var(--height));
+                        // width: calc(var(--size) * var(--depth) * 4);
                     }
                     &.top    { 
                         transform: rotateX(90deg)  translateZ(calc(var(--size) / 2)); 
                         width: calc(var(--size) * var(--width));
                     }
                     &.bottom { 
-                        transform: rotateX(-90deg) translateZ(calc(var(--size) * 2.5)); // todo: height adj 
+                        transform: rotateX(-90deg) translateZ(calc(var(--size) * (3 * var(--height) - 0.5)));
                         width: calc(var(--size) * var(--width));
                     }
                 }
