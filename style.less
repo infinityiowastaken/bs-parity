@@ -287,12 +287,15 @@ body {
                     &.left   { 
                         transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)); 
                         height: calc(var(--size) * 3 * var(--height));
-                        // width: calc(var(--size) * var(--depth) * 4);
+                        width: var(--depth);
                     }
                     &.right  { 
-                        transform: rotateY(90deg)  translateZ(calc( var(--size) * (var(--width) - 0.5) )); 
+                        transform: 
+                            rotateY(90deg)  
+                            translateX(calc(0.5 * (var(--depth) - var(--size))))
+                            translateZ(calc(var(--size) * (var(--width) - 0.5))); 
                         height: calc(var(--size) * 3 * var(--height));
-                        // width: calc(var(--size) * var(--depth) * 4);
+                        width: var(--depth);
                     }
                     &.top {
                         transform: 
@@ -309,7 +312,6 @@ body {
                         transform: rotateX(-90deg) translateZ(calc(var(--size) * (3 * var(--height) - 0.5)));
                         width: calc(var(--size) * var(--width));
                         height: var(--depth);
-                        // background: rgba(83, 221, 48, 0.67);
                     }
                 }
             }

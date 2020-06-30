@@ -70,14 +70,16 @@ function renderWalls(walls, centerBeat) {
         let posZ = relTime * timeScale * (containerWidth / 4) * -1;
         let width = wall._width;
         let depth = Math.min(wall._duration, centerBeat + renderDistance - wall._time);
+        let height = (wall._type == 0) ? 1 : 0.5
 
+        depth = depth * timeScale * containerWidth / 4;
 
         let wallContainer = document.createElement('div');
         wallContainer.classList.add('wall');
-        wallContainer.style.setProperty('--size', noteSize + 'px');
-        wallContainer.style.setProperty('--width', width);
-        wallContainer.style.setProperty('--depth', depth * timeScale);
-        wallContainer.style.setProperty('--height', (wall._type == 0) ? 1 : 0.5);
+        wallContainer.style.setProperty('--size',   noteSize + 'px');
+        wallContainer.style.setProperty('--width',  width);
+        wallContainer.style.setProperty('--depth',  depth + 'px');
+        wallContainer.style.setProperty('--height', height);
 
 
         let faces = ['front', 'back', 'left', 'right', 'top', 'bottom'];
