@@ -279,31 +279,20 @@ body {
                         height: calc(var(--size) * 3 * var(--height));;
                         width: calc(var(--size) * var(--width));
                     }
-                    &.back { 
-                        transform: rotateY(180deg) translateZ(calc(var(--depth) - var(--size)/2)); 
+                    &.back   { 
+                        transform: rotateY(180deg) translateZ(calc(var(--size) / 2)); 
                         height: calc(var(--size) * 3 * var(--height));
                         width: calc(var(--size) * var(--width));
                     }
-                    &.left { 
-                        transform: rotateY(-90deg) 
-                            translate3d(
-                                calc(-0.5 * (var(--depth) - var(--size))),
-                                0px,
-                                calc(0.5 * var(--depth))
-                            ); 
+                    &.left   { 
+                        transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)); 
                         height: calc(var(--size) * 3 * var(--height));
-                        width: var(--depth);
+                        // width: calc(var(--size) * var(--depth) * 4);
                     }
-                    &.right { 
-                        transform: 
-                            rotateY(90deg)
-                            translate3D(
-                                calc(0.5 * (var(--depth) - var(--size))), 
-                                0px,
-                                calc((var(--size) * var(--width) - 0.5 * var(--depth)))
-                            ); 
+                    &.right  { 
+                        transform: rotateY(90deg)  translateZ(calc( var(--size) * (var(--width) - 0.5) )); 
                         height: calc(var(--size) * 3 * var(--height));
-                        width: var(--depth);
+                        // width: calc(var(--size) * var(--depth) * 4);
                     }
                     &.top {
                         transform: 
@@ -317,13 +306,7 @@ body {
                         height: var(--depth);
                     }
                     &.bottom { 
-                        transform: 
-                            rotateX(-90deg) 
-                            translate3D(
-                                0px,
-                                calc(0.5 * (var(--depth) - var(--size))),
-                                calc((var(--size) * 3 * var(--height)) - (var(--depth) / 2))
-                            );
+                        transform: rotateX(-90deg) translateZ(calc(var(--size) * (3 * var(--height) - 0.5)));
                         width: calc(var(--size) * var(--width));
                         height: var(--depth);
                         // background: rgba(83, 221, 48, 0.67);
