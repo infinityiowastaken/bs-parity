@@ -123,8 +123,6 @@ function renderWalls(walls, centerBeat) {
         return (start <= rEnd && end >= rStart)
     });
 
-    console.log(walls)
-
     // calculate note position, make note element and add to the container
     for (let wall of walls) {
         let relTime = wall._time - centerBeat;
@@ -140,7 +138,8 @@ function renderWalls(walls, centerBeat) {
         wallContainer.classList.add('wall');
         wallContainer.style.setProperty('--size', noteSize + 'px');
         wallContainer.style.setProperty('--width', width);
-        wallContainer.style.setProperty('--depth', depth);
+        wallContainer.style.setProperty('--depth', depth * timeScale);
+        wallContainer.style.setProperty('--height', (wall._type == 0) ? 1 : 0.5);
 
 
         let faces = ['front', 'back', 'left', 'right', 'top', 'bottom'];
