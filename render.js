@@ -136,8 +136,8 @@ function renderWalls(walls, centerBeat) {
 
 
         let faces = ['front', 'back', 'left', 'right', 'top', 'bottom'];
-        let reducedFaces = ['front', 'top', 'right'];
-        for (let face of reducedFaces) {
+        // let reducedFaces = ['front', 'left', 'bottom'];
+        for (let face of faces) {
             let wallFace = document.createElement('div');
             wallFace.classList.add('wall-face', face);
             wallContainer.appendChild(wallFace);
