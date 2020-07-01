@@ -264,7 +264,7 @@ body {
                 transform-style: preserve-3d;
     
                 .wall-face { // todo: depth
-                    // backface-visibility: hidden;
+                    backface-visibility: hidden;
                     position: absolute;
                     display: block;
                     width: var(--size);
@@ -287,13 +287,12 @@ body {
                     &.left { 
                         transform: rotateY(-90deg) 
                             translate3d(
+                                calc(-0.5 * (var(--depth) - var(--size))),
                                 0px,
-                                0px,
-                                calc(var(--size) / 2)
+                                calc(0.5 * var(--depth))
                             ); 
                         height: calc(var(--size) * 3 * var(--height));
                         width: var(--depth);
-                        background: rgba(83, 221, 48, 0.67);
                     }
                     &.right { 
                         transform: 
@@ -318,7 +317,13 @@ body {
                         height: var(--depth);
                     }
                     &.bottom { 
-                        transform: rotateX(-90deg) translateZ(calc(var(--size) * (3 * var(--height) - 0.5)));
+                        transform: 
+                            rotateX(-90deg) 
+                            translate3D(
+                                0px,
+                                calc(0.5 * (var(--depth) - var(--size))),
+                                calc((var(--size) * 3 * var(--height)) - (var(--depth) / 2))
+                            );
                         width: calc(var(--size) * var(--width));
                         height: var(--depth);
                         // background: rgba(83, 221, 48, 0.67);
