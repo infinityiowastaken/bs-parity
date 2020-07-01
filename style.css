@@ -287,14 +287,13 @@ body .theme {
   transform-style: preserve-3d;
 }
 .main #render-container #grid-container .wall .wall-face {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
   position: absolute;
   display: block;
   width: var(--size);
   height: var(--size);
   background: rgba(221, 48, 48, 0.67);
   outline: 1px solid rgba(255, 255, 255, 0.75);
+  outline-offset: -1px;
 }
 .main #render-container #grid-container .wall .wall-face.front {
   transform: rotateY(0deg) translateZ(calc(var(--size) / 2));
@@ -302,17 +301,18 @@ body .theme {
   width: calc(var(--size) * var(--width));
 }
 .main #render-container #grid-container .wall .wall-face.back {
-  transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
+  transform: rotateY(180deg) translateZ(calc(var(--depth) - var(--size)/2));
   height: calc(var(--size) * 3 * var(--height));
   width: calc(var(--size) * var(--width));
 }
 .main #render-container #grid-container .wall .wall-face.left {
-  transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
+  transform: rotateY(-90deg) translate3d(0px, 0px, calc(var(--size) / 2));
   height: calc(var(--size) * 3 * var(--height));
   width: var(--depth);
+  background: rgba(83, 221, 48, 0.67);
 }
 .main #render-container #grid-container .wall .wall-face.right {
-  transform: rotateY(90deg) translateX(calc(0.5 * (var(--depth) - var(--size)))) translateZ(calc(var(--size) * (var(--width) - 0.5)));
+  transform: rotateY(90deg) translate3D(calc(0.5 * (var(--depth) - var(--size))), 0px, calc(var(--size) * var(--width) - 0.5 * var(--depth)));
   height: calc(var(--size) * 3 * var(--height));
   width: var(--depth);
 }

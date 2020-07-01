@@ -263,38 +263,48 @@ body {
                 transform-style: preserve-3d;
     
                 .wall-face { // todo: depth
-                    backface-visibility: hidden;
+                    // backface-visibility: hidden;
                     position: absolute;
                     display: block;
                     width: var(--size);
                     height: var(--size);
                     background: rgba(221, 48, 48, 0.67);
                     outline: 1px solid rgba(255, 255, 255, 0.75);
+                    outline-offset: -1px;
     
-                    &.front  { 
+                    &.front { 
                         transform: rotateY(0deg)   translateZ(calc(var(--size) / 2)); 
                         height: calc(var(--size) * 3 * var(--height));;
                         width: calc(var(--size) * var(--width));
                     }
-                    &.back   { 
-                        transform: rotateY(180deg) translateZ(calc(var(--size) / 2)); 
+                    &.back { 
+                        transform: rotateY(180deg) translateZ(calc(var(--depth) - var(--size)/2)); 
                         height: calc(var(--size) * 3 * var(--height));
                         width: calc(var(--size) * var(--width));
                     }
-                    &.left   { 
-                        transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)); 
+                    &.left { 
+                        transform: rotateY(-90deg) 
+                            translate3d(
+                                0px,
+                                0px,
+                                calc(var(--size) / 2)
+                            ); 
                         height: calc(var(--size) * 3 * var(--height));
                         width: var(--depth);
+                        background: rgba(83, 221, 48, 0.67);
                     }
-                    &.right  { 
+                    &.right { 
                         transform: 
-                            rotateY(90deg)  
-                            translateX(calc(0.5 * (var(--depth) - var(--size))))
-                            translateZ(calc(var(--size) * (var(--width) - 0.5))); 
+                            rotateY(90deg)
+                            translate3D(
+                                calc(0.5 * (var(--depth) - var(--size))), 
+                                0px,
+                                calc((var(--size) * var(--width) - 0.5 * var(--depth)))
+                            ); 
                         height: calc(var(--size) * 3 * var(--height));
                         width: var(--depth);
                     }
-                    &.top    { 
+                    &.top {
                         transform: 
                             rotateX(90deg) 
                             translateZ(calc(var(--depth) / 2))
@@ -306,6 +316,7 @@ body {
                         transform: rotateX(-90deg) translateZ(calc(var(--size) * (3 * var(--height) - 0.5)));
                         width: calc(var(--size) * var(--width));
                         height: var(--depth);
+                        // background: rgba(83, 221, 48, 0.67);
                     }
                 }
             }
