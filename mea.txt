@@ -1,0 +1,4 @@
+1 unit of depth = 225.5px * timescale
+1 unit of width = sqrt2 * width
+
+translatez (depth - size) / 2
