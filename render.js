@@ -118,14 +118,15 @@ function renderWalls(walls, centerBeat) {
     walls = walls.filter(function (wall) {
         let start = wall._time;
         let end = wall._time + wall._duration;
-        let rStart = centerBeat - renderDistance;
-        let rEnd = centerBeat + renderDistance;
+        let rStart = centerBeat - renderDistance + 0.5;
+        let rEnd = centerBeat + renderDistance + 0.5;
         return (start <= rEnd && end >= rStart)
     });
 
     // calculate note position, make note element and add to the container
     for (let wall of walls) {
-        let relTime = wall._time - centerBeat;
+        let relTime = wall._time - centerBeat + 0.5;
+        let relEnd = relTime + wall._duration;
 
         let posX = (gridHeight / 3) * (0.5 + wall._lineIndex) - (noteSize / 2);
         let posY = (gridHeight / 3) * (0.5) - (noteSize / 2);
@@ -149,6 +150,7 @@ function renderWalls(walls, centerBeat) {
         for (let face of faces) {
             let wallFace = document.createElement('div');
             wallFace.classList.add('wall-face', face);
+            if (relEnd < 0.5) wallFace.classList.add('transl');
             wallContainer.appendChild(wallFace);
         }
 
