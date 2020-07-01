@@ -209,6 +209,8 @@ body .theme {
   position: absolute;
   transform-style: preserve-3d;
   cursor: pointer;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 .main #render-container #grid-container .note .note-face {
   position: absolute;
