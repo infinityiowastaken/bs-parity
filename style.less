@@ -227,6 +227,7 @@ body {
                 position: absolute;
                 transform-style: preserve-3d;
                 cursor: pointer;
+                backface-visibility: hidden;
     
                 .note-face {
                     position: absolute;
@@ -259,6 +260,81 @@ body {
                 &.precedingWarn  .note-face { border: 1px solid black; }
                 &.error .note-face { border: 1px solid var(--error);  }
                 &.warn  .note-face { border: 1px solid var(--warning);}
+            }
+
+            .wall {
+                --size: 50px;
+                width: calc(var(--size) * var(--width));
+                height: calc(var(--size) * 3);
+                position: absolute;
+                transform-style: preserve-3d;
+    
+                .wall-face { // todo: depth
+                    backface-visibility: hidden;
+                    position: absolute;
+                    display: block;
+                    width: var(--size);
+                    height: var(--size);
+                    background: rgba(221, 48, 48, 0.67);
+                    outline: 1px solid rgba(255, 255, 255, 0.75);
+                    outline-offset: -1px;
+                    
+                    &.transl { opacity:  0.5; }
+                    &.front { 
+                        transform: rotateY(0deg)   translateZ(calc(var(--size) / 2)); 
+                        height: calc(var(--size) * 3 * var(--height));;
+                        width: calc(var(--size) * var(--width));
+                    }
+                    &.back { 
+                        transform: rotateY(180deg) translateZ(calc(var(--depth) - var(--size)/2)); 
+                        height: calc(var(--size) * 3 * var(--height));
+                        width: calc(var(--size) * var(--width));
+                    }
+                    &.left { 
+                        transform: rotateY(-90deg) 
+                            translate3d(
+                                calc(-0.5 * (var(--depth) - var(--size))),
+                                0px,
+                                calc(0.5 * var(--depth))
+                            ); 
+                        height: calc(var(--size) * 3 * var(--height));
+                        width: var(--depth);
+                    }
+                    &.right { 
+                        transform: 
+                            rotateY(90deg)
+                            translate3D(
+                                calc(0.5 * (var(--depth) - var(--size))), 
+                                0px,
+                                calc((var(--size) * var(--width) - 0.5 * var(--depth)))
+                            ); 
+                        height: calc(var(--size) * 3 * var(--height));
+                        width: var(--depth);
+                    }
+                    &.top {
+                        transform: 
+                            rotateX(90deg) 
+                            translate3D(
+                                0px,
+                                calc(-0.5 * (var(--depth) - var(--size))),
+                                calc(var(--depth) / 2)
+                            );
+                        width: calc(var(--size) * var(--width));
+                        height: var(--depth);
+                    }
+                    &.bottom { 
+                        transform: 
+                            rotateX(-90deg) 
+                            translate3D(
+                                0px,
+                                calc(0.5 * (var(--depth) - var(--size))),
+                                calc((var(--size) * 3 * var(--height)) - (var(--depth) / 2))
+                            );
+                        width: calc(var(--size) * var(--width));
+                        height: var(--depth);
+                        // background: rgba(83, 221, 48, 0.67);
+                    }
+                }
             }
         }
     } // 3d visualiser
