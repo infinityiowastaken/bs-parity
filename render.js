@@ -123,7 +123,8 @@ function render(notes) {
     // TODO: set grid-container CSS dimensions here
     let gridHeight = containerHeight / 2;
 
-    let noteSize = gridHeight / 3 / Math.SQRT2;
+    let wallSize = gridHeight / 3;
+    let noteSize = wallSize / Math.SQRT2;
 
     // filter notes outside of range
     notes = notes.filter(function (note) {
@@ -197,8 +198,8 @@ function render(notes) {
         let relTime = wall._time - centerBeat;
         let relEnd = relTime + wall._duration;
 
-        let posX = (gridHeight / 3) * (0.5 + wall._lineIndex) - (noteSize / 2);
-        let posY = (gridHeight / 3) * (0.5) - (noteSize / 2);
+        let posX = (gridHeight / 3) * (0.5 + wall._lineIndex) - (wallSize / 2);
+        let posY = (gridHeight / 3) * (0.5) - (wallSize / 2);
         let posZ = relTime * timeScale * (containerWidth / 4) * -1;
         let width = wall._width;
         let depth = Math.min(wall._duration, centerBeat + renderDistance - wall._time);
@@ -208,7 +209,7 @@ function render(notes) {
 
         let wallContainer = document.createElement('div');
         wallContainer.classList.add('wall');
-        wallContainer.style.setProperty('--size',   noteSize + 'px');
+        wallContainer.style.setProperty('--size',   wallSize + 'px');
         wallContainer.style.setProperty('--width',  width);
         wallContainer.style.setProperty('--depth',  depth + 'px');
         wallContainer.style.setProperty('--height', height);
