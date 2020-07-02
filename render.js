@@ -155,7 +155,7 @@ function renderWalls(walls, centerBeat) {
     }
 }
 
-function render(notes, centerBeat) {
+function render(notes) {
     if (!ready) {
         clearOutput();
         outputMessage('File loading not ready, try again', 'error');
