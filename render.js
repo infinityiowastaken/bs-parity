@@ -101,60 +101,6 @@ async function scrollVal(end, framerate = 30) {
     scrolling = false;
 }
 
-function renderWalls(walls, centerBeat) {
-    let containerWidth = renderContainer.offsetWidth;
-    let containerHeight = renderContainer.offsetHeight;
-    let gridHeight = containerHeight / 2;
-    let noteSize = gridHeight / 3;
-
-    // filter notes outside of range
-    walls = walls.filter(function (wall) {
-        let start = wall._time;
-        let end = wall._time + wall._duration;
-        let rStart = centerBeat - renderDistance + 0.5;
-        let rEnd = centerBeat + renderDistance + 0.5;
-        return (start <= rEnd && end >= rStart)
-    });
-
-    // calculate note position, make note element and add to the container
-    for (let wall of walls) {
-        let relTime = wall._time - centerBeat + 0.5;
-        let relEnd = relTime + wall._duration;
-
-        let posX = (gridHeight / 3) * (0.5 + wall._lineIndex) - (noteSize / 2);
-        let posY = (gridHeight / 3) * (0.5) - (noteSize / 2);
-        let posZ = relTime * timeScale * (containerWidth / 4) * -1;
-        let width = wall._width;
-        let depth = Math.min(wall._duration, centerBeat + renderDistance - wall._time);
-        let height = (wall._type == 0) ? 1 : 0.5
-
-        depth = depth * timeScale * containerWidth / 4;
-
-        let wallContainer = document.createElement('div');
-        wallContainer.classList.add('wall');
-        wallContainer.style.setProperty('--size',   noteSize + 'px');
-        wallContainer.style.setProperty('--width',  width);
-        wallContainer.style.setProperty('--depth',  depth + 'px');
-        wallContainer.style.setProperty('--height', height);
-
-
-        let faces = ['front', 'back', 'left', 'right', 'top', 'bottom'];
-        // let reducedFaces = ['front', 'left', 'bottom'];
-        for (let face of faces) {
-            let wallFace = document.createElement('div');
-            wallFace.classList.add('wall-face', face);
-            if (relEnd < 0.5) wallFace.classList.add('transl');
-            wallContainer.appendChild(wallFace);
-        }
-
-        wallContainer.style.setProperty('left', posX + 'px');
-        wallContainer.style.setProperty('top', posY + 'px');
-        wallContainer.style.setProperty('transform', 'translateZ(' + posZ + 'px)');
-
-        gridContainer.appendChild(wallContainer);
-    }
-}
-
 function render(notes) {
     if (!ready) {
         clearOutput();
@@ -235,6 +181,53 @@ function render(notes) {
         }
 
         gridContainer.appendChild(noteContainer);
+    }
+
+    // filter walls outside of range
+    walls = walls.filter(function (wall) {
+        let start = wall._time;
+        let end = wall._time + wall._duration;
+        let rStart = centerBeat - renderDistance + 0.5;
+        let rEnd = centerBeat + renderDistance + 0.5;
+        return (start <= rEnd && end >= rStart)
+    });
+
+    // calculate wall position, make wall element and add to the container
+    for (let wall of walls) {
+        let relTime = wall._time - centerBeat + 0.5;
+        let relEnd = relTime + wall._duration;
+
+        let posX = (gridHeight / 3) * (0.5 + wall._lineIndex) - (noteSize / 2);
+        let posY = (gridHeight / 3) * (0.5) - (noteSize / 2);
+        let posZ = relTime * timeScale * (containerWidth / 4) * -1;
+        let width = wall._width;
+        let depth = Math.min(wall._duration, centerBeat + renderDistance - wall._time);
+        let height = (wall._type == 0) ? 1 : 0.5
+
+        depth = depth * timeScale * containerWidth / 4;
+
+        let wallContainer = document.createElement('div');
+        wallContainer.classList.add('wall');
+        wallContainer.style.setProperty('--size',   noteSize + 'px');
+        wallContainer.style.setProperty('--width',  width);
+        wallContainer.style.setProperty('--depth',  depth + 'px');
+        wallContainer.style.setProperty('--height', height);
+
+
+        let faces = ['front', 'back', 'left', 'right', 'top', 'bottom'];
+        // let reducedFaces = ['front', 'left', 'bottom'];
+        for (let face of faces) {
+            let wallFace = document.createElement('div');
+            wallFace.classList.add('wall-face', face);
+            if (relEnd < 0.5) wallFace.classList.add('transl');
+            wallContainer.appendChild(wallFace);
+        }
+
+        wallContainer.style.setProperty('left', posX + 'px');
+        wallContainer.style.setProperty('top', posY + 'px');
+        wallContainer.style.setProperty('transform', 'translateZ(' + posZ + 'px)');
+
+        gridContainer.appendChild(wallContainer);
     }
 
     let beatMarkers = [];
