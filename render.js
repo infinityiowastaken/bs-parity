@@ -46,7 +46,7 @@ async function scrollVal(end, framerate = 30) {
     scrolling = false;
 }
 
-function render(notes) {
+function render(notes = notesArray, walls = wallsArray) {
     if (!ready) {
         // TODO: reimplement this with outputUI()?
         console.log('File loading not ready, try again');
