@@ -72,19 +72,19 @@ themeBut.addEventListener('click', changeTheme);
 
 rdSlide.addEventListener('input', function () {
     renderDistance = parseFloat(rdSlide.value);
-    render(notesArray);
+    render(notesArray, wallsArray);
 });
 tsSlide.addEventListener('input', function () {
     timeScale = parseFloat(tsSlide.value);
-    render(notesArray);
+    render(notesArray, wallsArray);
 });
 piSlide.addEventListener('input', function () {
     perspectiveMultiplier = parseFloat(piSlide.value);
-    render(notesArray);
+    render(notesArray, wallsArray);
 });
 dvSlide.addEventListener('input', function () {
     divisionValue = parseFloat(dvSlide.value);
-    render(notesArray);
+    render(notesArray, wallsArray);
 });
 
 function changeTheme() {
@@ -184,14 +184,16 @@ function readFile(files) {
     const fr = new FileReader();
     fr.readAsText(files[0]);
     fr.addEventListener('load', function () {
-        notesArray = getNotes(JSON.parse(fr.result));
+        parsed = JSON.parse(fr.result)
+        notesArray = getNotes(parsed);
+        wallsArray = getWalls(parsed);
         introDiv.classList.remove('uploading');
         introDiv.classList.add('done');
         console.log('successful read!');
 
         ready = true;
         centerBeat = 0;
-        render(notesArray);
+        render(notesArray, wallsArray);
         checkParity();
     });
 }
@@ -256,4 +258,17 @@ function until(condition) {
     }
 
     return new Promise(poll);
+}
+
+function getWalls(obj) {
+    let walls = obj._obstacles;
+    walls.sort(function (a, b) {
+        return a._time - b._time;
+    })
+
+    // filter out invalid note types
+    walls = walls.filter(function (wall) {
+        return (wall._width >= 1 && wall._duration >= 0)
+    });
+    return walls;
 }
