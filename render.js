@@ -46,7 +46,7 @@ async function scrollVal(end, framerate = 30) {
     scrolling = false;
 }
 
-function render(notes = notesArray) {
+function render(notes = notesArray, walls = wallsArray) {
     if (!ready) {
         // TODO: reimplement this with outputUI()?
         console.log('File loading not ready, try again');
@@ -68,7 +68,8 @@ function render(notes = notesArray) {
     // TODO: set grid-container CSS dimensions here
     let gridHeight = containerHeight / 2;
 
-    let noteSize = gridHeight / 3 / Math.SQRT2;
+    let wallSize = gridHeight / 3;
+    let noteSize = wallSize / Math.SQRT2;
 
     // filter notes outside of range
     notes = notes.filter(function (note) {
@@ -128,11 +129,60 @@ function render(notes = notesArray) {
         gridContainer.appendChild(noteContainer);
     }
 
+    // filter walls outside of range
+    walls = walls.filter(function (wall) {
+        let start = wall._time;
+        let end = wall._time + wall._duration;
+        let rStart = centerBeat - renderDistance + 0.5;
+        let rEnd = centerBeat + renderDistance + 0.5;
+        return (start <= rEnd && end >= rStart)
+    });
+
+    // calculate wall position, make wall element and add to the container
+    for (let wall of walls) {
+        let relTime = wall._time - centerBeat;
+        let relEnd = relTime + wall._duration;
+
+        let posX = (gridHeight / 3) * (0.5 + wall._lineIndex) - (wallSize / 2);
+        let posY = (gridHeight / 3) * (0.5) - (wallSize / 2);
+        let posZ = relTime * timeScale * (containerWidth / 4) * -1;
+        let width = wall._width;
+        let depth = Math.min(wall._duration, centerBeat + renderDistance - wall._time);
+        let height = (wall._type == 0) ? 1 : 0.5
+
+        depth = depth * timeScale * containerWidth / 4;
+
+        let wallContainer = document.createElement('div');
+        wallContainer.classList.add('wall');
+        wallContainer.style.setProperty('--size',   wallSize + 'px');
+        wallContainer.style.setProperty('--width',  width);
+        wallContainer.style.setProperty('--depth',  depth + 'px');
+        wallContainer.style.setProperty('--height', height);
+
+
+        let faces = ['front', 'back', 'left', 'right', 'top', 'bottom'];
+        // let reducedFaces = ['front', 'left', 'bottom'];
+        for (let face of faces) {
+            let wallFace = document.createElement('div');
+            wallFace.classList.add('wall-face', face);
+            if (relEnd < 0) wallFace.classList.add('transl');
+            wallContainer.appendChild(wallFace);
+        }
+
+        wallContainer.style.setProperty('left', posX + 'px');
+        wallContainer.style.setProperty('top', posY + 'px');
+        wallContainer.style.setProperty('transform', 'translateZ(' + posZ + 'px)');
+
+        gridContainer.appendChild(wallContainer);
+    }
+
     let beatMarkers = [];
-    for (let i = Math.max(0, Math.ceil(centerBeat - renderDistance - 1)); i <= Math.floor(centerBeat + renderDistance + 1); i++) {
-        if (i <= Math.floor(centerBeat + renderDistance + 1)) {
-            for (let j = 0; j < divisionValue; j++) {
-                beatMarkers.push(i + (j / divisionValue));
+    for ( let i = Math.max(0, Math.ceil(centerBeat - renderDistance - 1)); 
+          i <= Math.floor(centerBeat + renderDistance + 1); 
+          i++ ) {
+            if (i <= Math.floor(centerBeat + renderDistance + 1)) {
+                for (let j = 0; j < divisionValue; j++) {
+                    beatMarkers.push(i + (j / divisionValue));
             }
         }
     }
@@ -190,6 +240,6 @@ function render(notes = notesArray) {
         gridContainer.appendChild(marker);
     }
 
-    gridContainer.style.setProperty('transform', 'perspective(' + containerHeight * (1 / perspectiveMultiplier) + 'px) ' +
-        'rotateX(' + angleX + 'deg) rotateY(' + angleY + 'deg) translateZ(' + containerHeight / -3 + 'px)');
+    gridContainer.style.setProperty('transform', 'perspective(' + containerHeight * (1 / perspectiveMultiplier) + 'px)' +
+        'rotateX(' + angleX + 'deg) rotateY(' + angleY + 'deg)');
 }
