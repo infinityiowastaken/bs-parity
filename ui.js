@@ -107,29 +107,3 @@ function highlightElements(time) {
         (element) => { element.classList.add('selected'); }
     );
 }
-
-function getWalls(obj) {
-    let walls = obj._obstacles;
-    walls.sort(function (a, b) {
-        return a._time - b._time;
-    })
-
-    // filter out invalid note types
-    walls = walls.filter(function (wall) {
-        return (wall._width >= 1 && wall._duration >= 0)
-    });
-    return walls;
-}
-
-function getWalls(obj) {
-    let walls = obj._obstacles;
-    walls.sort(function (a, b) {
-        return a._time - b._time;
-    })
-
-    // filter out invalid note types
-    walls = walls.filter(function (wall) {
-        return (wall._width >= 1 && wall._duration >= 0)
-    });
-    return walls;
-}
