@@ -240,8 +240,6 @@ function render(notes = notesArray, walls = wallsArray) {
         gridContainer.appendChild(marker);
     }
 
-    renderWalls(wallsArray, centerBeat);
-
     gridContainer.style.setProperty('transform', 'perspective(' + containerHeight * (1 / perspectiveMultiplier) + 'px)' +
         'rotateX(' + angleX + 'deg) rotateY(' + angleY + 'deg)');
 }
